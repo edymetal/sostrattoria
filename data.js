@@ -1,8 +1,9 @@
 import { db } from './firebase-config.js';
 import { doc, onSnapshot, updateDoc, setDoc } from "firebase/firestore";
 
-// Helper to check if config is still placeholder
-const isFirebaseConfigured = !db.app.options.apiKey.includes("SUA_API_KEY");
+// Helper to check if config is still placeholder or missing
+const apiKey = db.app.options.apiKey;
+const isFirebaseConfigured = apiKey && typeof apiKey === 'string' && !apiKey.includes("SUA_API_KEY") && !apiKey.includes("undefined");
 
 const collectionName = "sostrattoria";
 const docId = "inventory_list";
