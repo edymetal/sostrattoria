@@ -79,7 +79,7 @@ export const store = {
 
   init() {
     if (isFirebaseConfigured) {
-      console.log("🔥 Firebase Ativo: Sincronizando com a nuvem...");
+      console.log("🔥 Firebase Ativo: Sincronizando com a nuvem...", apiKey.slice(0, 5) + "...");
       // Initialize Firebase Listeners
       const docRef = doc(db, collectionName, docId);
 
