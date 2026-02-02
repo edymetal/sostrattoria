@@ -71,6 +71,16 @@ passwordModal.addEventListener('click', (e) => {
 btnLock.addEventListener('click', toggleLock);
 
 function updateLockUI() {
+  if (isEditingUnlocked) {
+    btnLock.classList.add('unlocked');
+    lockIcon.classList.remove('bi-lock-fill');
+    lockIcon.classList.add('bi-unlock-fill');
+  } else {
+    btnLock.classList.remove('unlocked');
+    lockIcon.classList.remove('bi-unlock-fill');
+    lockIcon.classList.add('bi-lock-fill');
+  }
+}
 
 // RENDER LOGIC
 function renderGrid() {
