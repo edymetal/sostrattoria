@@ -22,10 +22,13 @@
   <div id="app" class="container">
 
     <header class="app-header">
-      <div>
+      <div class="header-text">
         <h1 class="title-lg">Sostrattoria</h1>
         <p class="subtitle">Toque no item para marcar como falta/comprado</p>
       </div>
+      <button id="btn-lock" class="btn-lock" aria-label="Desbloquear Edição">
+        <i id="lock-icon" class="bi bi-lock-fill"></i>
+      </button>
     </header>
 
     <div id="items-grid" class="grid-container">
@@ -33,6 +36,22 @@
     </div>
 
   </div>
+  <!-- Password Modal -->
+  <div id="password-modal" class="modal-backdrop">
+    <div class="modal-content">
+      <h2 class="modal-title">Acesso Restrito 🔒</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 20px;">Digite a senha para desbloquear a edição.</p>
+
+      <input type="password" id="password-input" class="password-input" placeholder="Senha" />
+      <div id="password-error" class="error-message"></div>
+
+      <div class="modal-actions">
+        <button id="btn-cancel-auth" class="btn btn-outline">Cancelar</button>
+        <button id="btn-confirm-auth" class="btn btn-primary">Entrar</button>
+      </div>
+    </div>
+  </div>
+
   <script type="module" src="/main.js"></script>
 </body>
 
