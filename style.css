@@ -140,28 +140,36 @@ body {
 }
 
 .app-header {
-  margin-bottom: 40px;
+  margin-bottom: 50px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding: 0 10px;
-  gap: 20px;
+  justify-content: center;
+  padding: 40px 10px;
+  text-align: center;
+  position: relative;
 }
 
 .header-brand {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
 }
 
 .manager-container {
-  width: 80px;
-  height: 80px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
   overflow: hidden;
-  border: 3px solid var(--accent-gold);
-  box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+  border: 5px solid var(--accent-gold);
+  box-shadow: 0 0 40px rgba(251, 191, 36, 0.4);
   flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.manager-container:hover {
+  transform: scale(1.05);
 }
 
 .manager-img {
@@ -171,10 +179,13 @@ body {
 }
 
 .header-text {
-  text-align: left;
+  text-align: center;
 }
 
 .btn-lock {
+  position: absolute;
+  top: 10px;
+  right: 10px;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   color: var(--text-secondary);
@@ -189,6 +200,7 @@ body {
   transition: all 0.3s ease;
 }
 
+/* btn-lock is now absolute positioned above */
 .btn-lock:hover {
   background: rgba(255, 255, 255, 0.1);
   color: var(--text-primary);
@@ -419,13 +431,20 @@ body {
 }
 
 .title-lg {
-  font-size: 2.5rem;
+  font-size: 3.5rem;
   font-weight: 800;
   margin-bottom: 8px;
-  background: linear-gradient(to right, #fff, #fbbf24);
+  background: linear-gradient(135deg, #fff 0%, #fbbf24 50%, #ef4444 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.2));
+}
+
+@media (max-width: 480px) {
+  .title-lg {
+    font-size: 2.5rem;
+  }
 }
 
 .subtitle {
