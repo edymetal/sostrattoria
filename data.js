@@ -1,7 +1,11 @@
-/**
- * Data Management for Sostrattoria Inventory
- */
+import { db } from './firebase-config.js';
+import { doc, onSnapshot, updateDoc, setDoc } from "firebase/firestore";
 
+// Helper to check if config is still placeholder
+const isFirebaseConfigured = !db.app.options.apiKey.includes("SUA_API_KEY");
+
+const collectionName = "sostrattoria";
+const docId = "inventory_list";
 const STORAGE_KEY = 'sostrattoria_inventory_v1';
 
 export const INITIAL_ITEMS = [
@@ -14,7 +18,7 @@ export const INITIAL_ITEMS = [
   {
     id: 'trash_large',
     name: 'Saco de Lixo (Grande)',
-    image: '/images/saco_lixo_pequeno.png', // Reusing small bag as placeholder if large is missing
+    image: '/images/saco_lixo_pequeno.png',
     icon: 'bi-trash-fill'
   },
   {
@@ -67,61 +71,87 @@ export const INITIAL_ITEMS = [
   }
 ];
 
-// Helper to generate unique IDs or use static ones
-const generateId = () => Date.now().toString(36) + Math.random().toString(36).substr(2);
-
-// Initial State load
-const loadState = () => {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored) {
-    return JSON.parse(stored);
-  }
-  return {
-    items: [] // { id, name, needed: boolean, urgency: 'normal'|'high', createdAt: string }
-  };
-};
-
 export const store = {
-  state: loadState(),
+  state: {},
   listeners: [],
+  unsubscribe: null,
 
-  subscribe(listener) {
-    this.listeners.push(listener);
-  },
+  init() {
+    if (isFirebaseConfigured) {
+      console.log("🔥 Firebase Ativo: Sincronizando com a nuvem...");
+      // Initialize Firebase Listeners
+      const docRef = doc(db, collectionName, docId);
 
-  notify() {
-    this.listeners.forEach(listener => listener(this.state));
-    this.save();
-  },
-
-  save() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
-  },
-
-  // Actions
-  toggleItemStatus(itemId) {
-    const existingIndex = this.state.items.findIndex(i => i.id === itemId && i.needed);
-
-    if (existingIndex >= 0) {
-      // Already needed -> Remove (Mark as purchased/not needed)
-      this.state.items.splice(existingIndex, 1);
-    } else {
-      // Not needed -> Add
-      // Find name from INITIAL_ITEMS if possible, or just use ID (refactor needed if totally dynamic)
-      // Since we now use static IDs for initial items, we can look them up.
-      const baseItem = INITIAL_ITEMS.find(i => i.id === itemId);
-      this.state.items.push({
-        id: itemId,
-        name: baseItem ? baseItem.name : itemId,
-        needed: true,
-        urgency: 'normal',
-        createdAt: new Date().toISOString()
+      this.unsubscribe = onSnapshot(docRef, (docSnap) => {
+        if (docSnap.exists()) {
+          this.state = docSnap.data();
+          this.notify();
+        } else {
+          // If doc doesn't exist, create it with empty state
+          setDoc(docRef, {});
+        }
+      }, (error) => {
+        console.error("Erro no Firebase (verifique regras de segurança):", error);
+        // Fallback silently or alert user once
       });
+    } else {
+      console.warn("⚠️ Firebase não configurado. Usando LocalStorage (Modo Offline).");
+      // Fallback to LocalStorage
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        this.state = JSON.parse(saved);
+      }
     }
-    this.notify();
   },
 
   isNeeded(itemId) {
-    return this.state.items.some(i => i.id === itemId && i.needed);
+    return !!this.state[itemId];
+  },
+
+  async toggleItemStatus(itemId) {
+    const newState = !this.state[itemId];
+
+    if (isFirebaseConfigured) {
+      // Update Cloud
+      const docRef = doc(db, collectionName, docId);
+      // We use object notation to update specific field
+      try {
+        await updateDoc(docRef, {
+          [itemId]: newState
+        });
+        // Optimistic update logic is handled by onSnapshot usually, 
+        // but for immediate feedback we can set it locally if needed.
+      } catch (e) {
+        // If document doesn't exist yet (first run), setDoc
+        if (e.code === 'not-found' || e.message && e.message.includes("No document")) {
+          await setDoc(docRef, { [itemId]: newState }, { merge: true });
+        } else {
+          console.error("Erro ao salvar:", e);
+          alert("Erro ao salvar no banco. Verifique sua conexão.");
+        }
+      }
+    } else {
+      // Local Storage Fallback
+      if (newState) {
+        this.state[itemId] = true;
+      } else {
+        delete this.state[itemId];
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
+      this.notify();
+    }
+  },
+
+  subscribe(callback) {
+    this.listeners.push(callback);
+    // Call immediately with current state
+    callback();
+  },
+
+  notify() {
+    this.listeners.forEach(cb => cb());
   }
 };
+
+// Initialize the store
+store.init();
