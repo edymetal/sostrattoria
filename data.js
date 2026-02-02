@@ -12,61 +12,61 @@ const STORAGE_KEY = 'sostrattoria_inventory_v1';
 export const INITIAL_ITEMS = [
   {
     id: 'trash_small',
-    name: 'Saco de Lixo (Pequeno)',
+    name: 'Sacchetto Spazzatura (Piccolo)',
     image: '/images/saco_lixo_pequeno.png',
     icon: 'bi-trash3'
   },
   {
     id: 'trash_large',
-    name: 'Saco de Lixo (Grande)',
+    name: 'Sacchetto Spazzatura (Grande)',
     image: '/images/saco_lixo_pequeno.png',
     icon: 'bi-trash-fill'
   },
   {
     id: 'detergent_dish',
-    name: 'Detergente Pratos',
+    name: 'Detersivo Piatti',
     image: '/images/detergente_pratos.png',
     icon: 'bi-droplet'
   },
   {
     id: 'detergent_laundry',
-    name: 'Detergente Máquina',
+    name: 'Detersivo Lavastoviglie',
     image: '/images/detergente_lava_pratos.png',
     icon: 'bi-water'
   },
   {
     id: 'rinse_machine',
-    name: 'Brilhante Máquina',
+    name: 'Brillantante',
     image: '/images/brilhante_lava_pratos.png',
     icon: 'bi-stars'
   },
   {
     id: 'cleaner_floor',
-    name: 'Limpa Chão',
+    name: 'Detersivo Pavimenti',
     image: '/images/detergente_chao.png',
     icon: 'bi-house-heart'
   },
   {
     id: 'cleaner_doors',
-    name: 'Spray Limpeza',
+    name: 'Spray Pulizia',
     image: '/images/spray_limpeza.png',
     icon: 'bi-magic'
   },
   {
     id: 'cleaner_alum',
-    name: 'Spray Alumínio',
+    name: 'Spray Alluminio',
     image: '/images/spray_aluminio.png',
     icon: 'bi-stars'
   },
   {
     id: 'sponge_dish',
-    name: 'Esponja',
+    name: 'Spugna',
     image: '/images/esponja_lava_prato.png',
     icon: 'bi-layers'
   },
   {
     id: 'steel_wool',
-    name: 'Palha de Aço',
+    name: 'Paglietta',
     image: '/images/palha_aco.png',
     icon: 'bi-record-circle'
   }
@@ -79,7 +79,7 @@ export const store = {
 
   init() {
     if (isFirebaseConfigured) {
-      console.log("🔥 Firebase Ativo: Sincronizando com a nuvem...", apiKey.slice(0, 5) + "...");
+      console.log("🔥 Firebase Attivo: Sincronizzazione con il cloud...", apiKey.slice(0, 5) + "...");
       // Initialize Firebase Listeners
       const docRef = doc(db, collectionName, docId);
 
@@ -96,7 +96,7 @@ export const store = {
         // Fallback silently or alert user once
       });
     } else {
-      console.warn("⚠️ Firebase não configurado. Usando LocalStorage (Modo Offline).");
+      console.warn("⚠️ Firebase non configurato. Utilizzo di LocalStorage (Modalità Offline).");
       // Fallback to LocalStorage
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
@@ -128,7 +128,7 @@ export const store = {
           await setDoc(docRef, { [itemId]: newState }, { merge: true });
         } else {
           console.error("Erro ao salvar:", e);
-          alert("Erro ao salvar no banco. Verifique sua conexão.");
+          alert("Errore durante il salvataggio nel database. Controlla la tua connessione.");
         }
       }
     } else {

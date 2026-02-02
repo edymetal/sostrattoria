@@ -45,7 +45,7 @@ function checkPassword() {
     updateLockUI();
     closeModal();
   } else {
-    passwordError.textContent = "Senha incorreta. Tente novamente.";
+    passwordError.textContent = "Password errata. Riprova.";
     passwordInput.value = '';
     passwordInput.focus();
 
@@ -102,7 +102,7 @@ function renderGrid() {
           <div class="card-title">${item.name}</div>
         </div>
       </div>
-      <div class="status-badge">EM FALTA</div>
+      <div class="status-badge">MANCANTE</div>
     `;
 
     card.addEventListener('click', () => {

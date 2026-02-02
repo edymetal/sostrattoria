@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="it">
 
 <head>
   <meta charset="UTF-8" />
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
 
   <link rel="stylesheet" href="./style.css">
-  <title>SOS Trattoria | Controle de Estoque</title>
+  <title>SOS Trattoria | Controllo Inventario</title>
 </head>
 
 <body>
@@ -28,10 +28,10 @@
         </div>
         <div class="header-text">
           <h1 class="title-lg">SOS Trattoria</h1>
-          <p class="subtitle">Controle de Estoque</p>
+          <p class="subtitle">Controllo Inventario</p>
         </div>
       </div>
-      <button id="btn-lock" class="btn-lock" aria-label="Desbloquear Edição">
+      <button id="btn-lock" class="btn-lock" aria-label="Sbloccare Modifica">
         <i id="lock-icon" class="bi bi-lock-fill"></i>
       </button>
     </header>
@@ -44,15 +44,15 @@
   <!-- Password Modal -->
   <div id="password-modal" class="modal-backdrop">
     <div class="modal-content">
-      <h2 class="modal-title">Acesso Restrito 🔒</h2>
-      <p style="color: var(--text-secondary); margin-bottom: 20px;">Digite a senha para desbloquear a edição.</p>
+      <h2 class="modal-title">Accesso Limitato 🔒</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 20px;">Inserisci la password per sbloccare.</p>
 
-      <input type="password" id="password-input" class="password-input" placeholder="Senha" />
+      <input type="password" id="password-input" class="password-input" placeholder="Password" />
       <div id="password-error" class="error-message"></div>
 
       <div class="modal-actions">
-        <button id="btn-cancel-auth" class="btn btn-outline">Cancelar</button>
-        <button id="btn-confirm-auth" class="btn btn-primary">Entrar</button>
+        <button id="btn-cancel-auth" class="btn btn-outline">Annulla</button>
+        <button id="btn-confirm-auth" class="btn btn-primary">Entra</button>
       </div>
     </div>
   </div>
