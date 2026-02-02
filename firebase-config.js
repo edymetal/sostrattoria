@@ -1,13 +1,14 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
+// Configuração do Firebase (Pública para Web App)
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+  apiKey: "AIzaSyCSiGZPSgYQZFL3kr5xiWt9V9NjxzNHkXg",
+  authDomain: "sostrattoria.firebaseapp.com",
+  projectId: "sostrattoria",
+  storageBucket: "sostrattoria.firebasestorage.app",
+  messagingSenderId: "979161058099",
+  appId: "1:979161058099:web:2b3b448202710ffc8acc46"
 };
 
 // Initialize Firebase
