@@ -309,7 +309,8 @@ body::before {
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   margin-top: 16px;
-  background: white;
+  background: #1e293b;
+  /* Deep Blue / Slate 800 */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -334,7 +335,8 @@ body::before {
 }
 
 .product-card:hover .card-image-container {
-  background: radial-gradient(circle at 50% 50%, #475569 0%, #1e293b 100%);
+  background: radial-gradient(circle at 50% 50%, #3b82f6 0%, #1d4ed8 100%);
+  /* Blue gradient on hover */
   border-color: var(--accent-gold);
 }
 
