@@ -85,9 +85,18 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     isEditingUnlocked = true;
     updateLockUI();
+    
+    // Mostra o nome do usuário no subtítulo se logado
+    const subtitle = document.querySelector('.subtitle');
+    if (subtitle) {
+      subtitle.textContent = `Ciao, ${user.displayName || user.email}`;
+    }
   } else {
-    // Only lock if we were unlocked by Google
-    // (password unlock doesn't trigger this)
+    // Restaura o subtítulo original se deslogado
+    const subtitle = document.querySelector('.subtitle');
+    if (subtitle) {
+      subtitle.textContent = 'Controllo Inventario';
+    }
   }
 });
 
