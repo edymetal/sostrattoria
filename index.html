@@ -61,19 +61,21 @@
       <h2 class="modal-title">Accesso Limitato 🔒</h2>
       <p style="color: var(--text-secondary); margin-bottom: 20px;">Inserisci la password per sbloccare.</p>
 
-      <input type="password" id="password-input" class="password-input" placeholder="Password" />
-      <div id="password-error" class="error-message"></div>
+      <form id="auth-form">
+        <input type="password" id="password-input" class="password-input" placeholder="Password" />
+        <div id="password-error" class="error-message"></div>
 
-      <div class="modal-divider"><span>ou</span></div>
+        <div class="modal-divider"><span>ou</span></div>
 
-      <button id="btn-google-auth" class="btn btn-google">
-        <i class="bi bi-google"></i> Entrar com Google
-      </button>
+        <button type="button" id="btn-google-auth" class="btn btn-google">
+          <i class="bi bi-google"></i> Entrar com Google
+        </button>
 
-      <div class="modal-actions">
-        <button id="btn-cancel-auth" class="btn btn-outline">Annulla</button>
-        <button id="btn-confirm-auth" class="btn btn-primary">Entra</button>
-      </div>
+        <div class="modal-actions">
+          <button type="button" id="btn-cancel-auth" class="btn btn-outline">Annulla</button>
+          <button type="submit" id="btn-confirm-auth" class="btn btn-primary">Entra</button>
+        </div>
+      </form>
     </div>
   </div>
 

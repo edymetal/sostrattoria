@@ -101,13 +101,14 @@ onAuthStateChanged(auth, (user) => {
 });
 
 // Event Listeners for Modal
-btnConfirmAuth.addEventListener('click', checkPassword);
+const authForm = document.getElementById('auth-form');
+authForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  checkPassword();
+});
+
 btnCancelAuth.addEventListener('click', closeModal);
 btnGoogleAuth.addEventListener('click', handleGoogleSignIn);
-
-passwordInput.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') checkPassword();
-});
 
 // Close verify if clicked outside
 passwordModal.addEventListener('click', (e) => {
