@@ -1,7 +1,7 @@
 import './style.css';
 import { store, INITIAL_ITEMS } from './data.js';
 import { auth, googleProvider } from './firebase-config.js';
-import { signInWithRedirect, onAuthStateChanged, signOut } from 'firebase/auth';
+import { signInWithPopup, onAuthStateChanged, signOut } from 'firebase/auth';
 
 const gridContainer = document.getElementById('items-grid');
 const btnLock = document.getElementById('btn-lock');
@@ -66,8 +66,10 @@ function checkPassword() {
 
 async function handleGoogleSignIn() {
   try {
-    await signInWithRedirect(auth, googleProvider);
-    // O site será redirecionado, o resultado será processado no onAuthStateChanged
+    await signInWithPopup(auth, googleProvider);
+    isEditingUnlocked = true;
+    updateLockUI();
+    closeModal();
   } catch (error) {
     console.error("Erro na autenticação com Google:", error);
     passwordError.textContent = "Erro ao entrar com Google.";
