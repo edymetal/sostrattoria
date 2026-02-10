@@ -66,23 +66,9 @@ function checkPassword() {
 
 async function handleGoogleSignIn() {
   try {
-    const result = await signInWithPopup(auth, googleProvider);
-    const user = result.user;
-    
-    // Lista de e-mails autorizados
-    const authorizedEmails = ['edneypugliese@gmail.com'];
-    
-    if (authorizedEmails.includes(user.email)) {
-      isEditingUnlocked = true;
-      updateLockUI();
-      closeModal();
-    } else {
-      // Se não estiver autorizado, desloga e mostra erro
-      await signOut(auth);
-      isEditingUnlocked = false;
-      updateLockUI();
-      passwordError.textContent = "Accesso negato: email non autorizzata.";
-    }
+    await signInWithPopup(auth, googleProvider);
+    // Todos podem logar agora. A permissão de edição é checada no onAuthStateChanged e no clique.
+    closeModal();
   } catch (error) {
     console.error("Erro na autenticação com Google:", error);
     passwordError.textContent = "Erro ao entrar com Google.";
@@ -93,19 +79,21 @@ async function handleGoogleSignIn() {
 onAuthStateChanged(auth, (user) => {
   const authorizedEmails = ['edneypugliese@gmail.com'];
   
-  if (user && authorizedEmails.includes(user.email)) {
-    isEditingUnlocked = true;
+  if (user) {
+    // Se logado, verifica se tem permissão de edição
+    isEditingUnlocked = authorizedEmails.includes(user.email);
     updateLockUI();
     
-    // Mostra o nome do usuário no subtítulo se logado
+    // Mostra o nome do usuário no subtítulo
     const subtitle = document.querySelector('.subtitle');
     if (subtitle) {
-      subtitle.textContent = `Ciao, ${user.displayName || user.email}`;
+      const role = isEditingUnlocked ? '' : ' (Visualizzazione)';
+      subtitle.textContent = `Ciao, ${user.displayName || user.email}${role}`;
     }
   } else {
+    // Se deslogado, tranca tudo
     isEditingUnlocked = false;
     updateLockUI();
-    // Restaura o subtítulo original se deslogado
     const subtitle = document.querySelector('.subtitle');
     if (subtitle) {
       subtitle.textContent = 'Controllo Inventario';
