@@ -22,18 +22,28 @@
   <div id="app" class="container">
 
     <header class="app-header">
+      <div class="header-actions">
+        <div id="user-top-profile" class="user-top-profile" style="display: none;">
+          <div class="user-info-text">
+            <p id="user-top-name" class="user-top-name"></p>
+            <span id="user-top-badge" class="access-badge-small"></span>
+          </div>
+          <img id="user-top-avatar" class="user-top-avatar" src="img/gerente.jpg" alt="User Avatar">
+        </div>
+        <button id="btn-lock" class="btn-lock" aria-label="Sbloccare Modifica">
+          <i id="lock-icon" class="bi bi-lock-fill"></i>
+        </button>
+      </div>
+
       <div class="header-brand">
         <div class="manager-container">
           <img src="img/gerente.jpg" alt="Gerente" class="manager-img">
         </div>
         <div class="header-text">
           <h1 class="title-lg">SOS Trattoria</h1>
-          <p class="subtitle">Controllo Inventario</p>
+          <p id="default-subtitle" class="subtitle">Controllo Inventario</p>
         </div>
       </div>
-      <button id="btn-lock" class="btn-lock" aria-label="Sbloccare Modifica">
-        <i id="lock-icon" class="bi bi-lock-fill"></i>
-      </button>
     </header>
 
     <div id="items-grid" class="grid-container">
@@ -62,7 +72,8 @@
       <p style="color: var(--text-secondary); margin-bottom: 20px;">Inserisci la password per sbloccare.</p>
 
       <form id="auth-form">
-        <input type="password" id="password-input" class="password-input" placeholder="Password" autocomplete="current-password" />
+        <input type="password" id="password-input" class="password-input" placeholder="Password"
+          autocomplete="current-password" />
         <div id="password-error" class="error-message"></div>
 
         <div class="modal-divider"><span>ou</span></div>

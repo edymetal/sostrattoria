@@ -25,7 +25,7 @@ function toggleLock() {
     // For now, let's just toggle the local state.
     isEditingUnlocked = false;
     updateLockUI();
-    
+
     // If signed in with Firebase, sign out
     if (auth.currentUser) {
       signOut(auth).catch(error => console.error("Erro ao sair:", error));
@@ -78,25 +78,52 @@ async function handleGoogleSignIn() {
 // Observe Auth State
 onAuthStateChanged(auth, (user) => {
   const authorizedEmails = ['edneypugliese@gmail.com'];
-  
+
+  // New Elements
+  const userTopProfile = document.getElementById('user-top-profile');
+  const userTopName = document.getElementById('user-top-name');
+  const userTopBadge = document.getElementById('user-top-badge');
+  const userTopAvatar = document.getElementById('user-top-avatar');
+
   if (user) {
     // Se logado, verifica se tem permissão de edição
     isEditingUnlocked = authorizedEmails.includes(user.email);
     updateLockUI();
-    
-    // Mostra o nome do usuário no subtítulo
-    const subtitle = document.querySelector('.subtitle');
-    if (subtitle) {
-      const role = isEditingUnlocked ? '' : ' (Visualizzazione)';
-      subtitle.textContent = `Ciao, ${user.displayName || user.email}${role}`;
+
+    // Atualiza Informações do Perfil no Topo
+    if (userTopProfile && userTopName && userTopBadge) {
+      // Nome
+      const displayName = user.displayName || user.email.split('@')[0];
+      // Limit name length if too long for header
+      const shortName = displayName.split(' ')[0];
+      userTopName.textContent = shortName;
+
+      // Tipo de Acesso
+      const isAdmin = isEditingUnlocked;
+      userTopBadge.textContent = isAdmin ? 'Amministratore' : 'Visitatore';
+      userTopBadge.className = `access-badge-small ${isAdmin ? 'admin' : 'visitor'}`;
+
+      // Mostrar o container
+      userTopProfile.style.display = 'flex';
+
+      // Atualiza a imagem do avatar
+      if (userTopAvatar) {
+        userTopAvatar.src = user.photoURL || 'img/gerente.jpg';
+        userTopProfile.classList.add('active');
+      }
     }
   } else {
     // Se deslogado, tranca tudo
     isEditingUnlocked = false;
     updateLockUI();
-    const subtitle = document.querySelector('.subtitle');
-    if (subtitle) {
-      subtitle.textContent = 'Controllo Inventario';
+
+    // Esconde o perfil do topo
+    if (userTopProfile) {
+      userTopProfile.style.display = 'none';
+      if (userTopAvatar) {
+        userTopAvatar.src = 'img/gerente.jpg'; // Reset
+      }
+      userTopProfile.classList.remove('active');
     }
   }
 });
