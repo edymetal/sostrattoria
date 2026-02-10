@@ -614,7 +614,7 @@ body::before {
     right: auto;
     width: 100%;
     margin-bottom: 24px;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
 }
 
