@@ -138,6 +138,13 @@ authForm.addEventListener('submit', (e) => {
 btnCancelAuth.addEventListener('click', closeModal);
 btnGoogleAuth.addEventListener('click', handleGoogleSignIn);
 
+const btnLogout = document.getElementById('btn-logout');
+if (btnLogout) {
+  btnLogout.addEventListener('click', () => {
+    signOut(auth).catch(error => console.error("Erro ao deslogar:", error));
+  });
+}
+
 // Close verify if clicked outside
 passwordModal.addEventListener('click', (e) => {
   if (e.target === passwordModal) closeModal();
