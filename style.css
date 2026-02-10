@@ -443,6 +443,45 @@ body::before {
   box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.4);
 }
 
+.btn-google {
+  background: white;
+  color: #334155;
+  margin-bottom: 24px;
+  border: 1px solid #e2e8f0;
+}
+
+.btn-google:hover {
+  background: #f8fafc;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.modal-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 24px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.modal-divider::before,
+.modal-divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.modal-divider:not(:empty)::before {
+  margin-right: .5em;
+}
+
+.modal-divider:not(:empty)::after {
+  margin-left: .5em;
+}
+
 .btn-danger {
   background: var(--danger);
   color: white;
